@@ -46,7 +46,8 @@ You need to modify the generated file structure as follows:
   any Taipy GUI application that needs to use the defined elements.</br>
 
   This name appears in the [`setup.py`](setup.py) file, as the value for the `name`
-  parameter of the invocation of *setup()*.
+  parameter of the invocation of *setup()*.<br/>
+  The value in the template is "taipy-gui-library".
 
 ## Repository structure
 

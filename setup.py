@@ -16,11 +16,11 @@ setup(
     # license="Apache License 2.0",
     install_requires=["taipy-gui>=2.0"],
     include_package_data=True,
-    name="guiext-library",
-    description="My taipy-gui extension demo",
-    long_description="This package contains a demonstration of using the Taipy GUI Extension API.",
+    name="taipy-gui-library",
+    description="Description of the Taipy GUI library.",
+    long_description="A longer description of what this Taipy GUI Extension library does.",
     keywords="taipy",
-    packages=find_packages(include=["demo_lib", "demo_lib.*"]),
+    packages=find_packages(include=["library", "library.*"]),
     version="1.0.0",
     zip_safe=False
 )
