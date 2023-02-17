@@ -31,11 +31,13 @@ module.exports = (env, options) => {
       },
       publicPath: "/",
     },
+    // The Taipy GUI library is indicated as external so that it is
+    // excluded from bundling.
     externals: { "taipy-gui": "TaipyGui" },
 
     // Enable sourcemaps for debugging webpack's output.
     devtool: options.mode === "development" && "inline-source-map",
-    // increase the performance budget
+    // Increase the performance budget
     performance: {
       hints: false,
       maxAssetSize: 350000,
@@ -60,7 +62,7 @@ module.exports = (env, options) => {
       new webpack.DllReferencePlugin({
         manifest: path.resolve(
           __dirname,
-          `${TAIPY_GUI_DIR}/webapp/taipy-gui-deps-manifest.json`
+          `${TAIPY_GUI_DIR}/taipy/gui/webapp/taipy-gui-deps-manifest.json`
         ),
         name: "TaipyGuiDependencies",
       }),

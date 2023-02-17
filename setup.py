@@ -16,11 +16,13 @@ setup(
     # license="Apache License 2.0",
     install_requires=["taipy-gui>=2.0"],
     include_package_data=True,
-    name="taipy-gui-library",
+    # The name of the Python package: <package-name>
+    name="taipy-gui-ext-library",
     description="Description of the Taipy GUI library.",
     long_description="A longer description of what this Taipy GUI Extension library does.",
     keywords="taipy",
-    packages=find_packages(include=["library", "library.*"]),
+    # The name of the Python package directory name: <package_dir_name>
+    packages=find_packages(include=["taipy_gui_ext_library", "taipy_gui_ext_library.*"]),
     version="1.0.0",
     zip_safe=False
 )

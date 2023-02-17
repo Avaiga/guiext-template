@@ -1,0 +1,9 @@
+package-lock.json
+
+# Build
+dist/
+node_modules/
+
+# Logs/Credentials
+.env
+.env.*

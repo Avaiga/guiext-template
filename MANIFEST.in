@@ -1,0 +1,3 @@
+# Include the extension library JavaScript bundle
+#   Pattern is <package_dir_name>/<frontend_code_dir>/<build_dir>/*
+include taipy_gui_ext_library/frontend/dist/*

@@ -1,10 +1,15 @@
 from taipy.gui import Gui
-from library import Library
+# Import extension library fromt the package directory name
+# from <package_dir_name> import Library
+from taipy_gui_ext_library import Library
 
+# The page contains the element from the custom extension library:
+# the full name of the element type is
+#     <extension_library_name>.<element_name>
 page = """
 # Extension library
 
-<|library.element|>
+<|My element content|library.element|>
 """
 gui = Gui(page=page)
 gui.add_library(Library())
