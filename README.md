@@ -152,6 +152,7 @@ Here are the parameters to watch and where they are referenced:
     The value in the template is "library.js"
 
 - Packaging information
+
   The [setup file](setup.py) defines a handful of information that is bundled
   in the Python package to identify it better when it is deployed.<br/>
   You can look at Python's documentation on
