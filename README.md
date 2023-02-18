@@ -151,6 +151,21 @@ Here are the parameters to watch and where they are referenced:
     assigned to *module.exports*.<br/>
     The value in the template is "library.js"
 
+- Packaging information
+  The [setup file](setup.py) defines a handful of information that is bundled
+  in the Python package to identify it better when it is deployed.<br/>
+  You can look at Python's documentation on
+  [Setup Scripts](https://docs.python.org/3/distutils/setupscript.html) or
+  the [setuptools documentation](https://setuptools.pypa.io/en/latest/)
+  for more information. Here is a quick summary of what you can customize:
+
+  - The *author* and *author_email* parameters can be set to identify you or your company;
+  - The *description* and *long_description* provide short and long text that
+    describes your package;
+  - *version* can be used to identify the version of your package;
+  - *keywords* can be used to facilitate finding your package in package repositories
+    that provide a search capability.
+
 ### Setting up the JavaScript build
 
 Before the bundle can be built, you must install the Node modules that are needed
