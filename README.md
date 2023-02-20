@@ -30,7 +30,7 @@ to create a new repository initialized from this template.
 - `README.md`: this file.
 - `demo.py`: Python script demonstrating the usage of the elements provided in the
    [`ElementLibrary`](https://docs.taipy.io/en/latest/manuals/reference/taipy.gui.extension.ElementLibrary/).
-- `setup.py`: Setup script for the extension library package.
+- `pyproject.toml`: Python project settings file for the extension library package.
 - `MANIFEST.in`: This file lists the commands to be executed when the Python package
   is built as a source distribution. See [this section](#packaging-the-extension-library)
   for more details.
@@ -48,7 +48,7 @@ to create a new repository initialized from this template.
          - `Element.tsx`: TypeScript source for the React component associated with
            the custom element called "element", as defined in the method
            `get_elements()` of the `ElementLibrary` subclass.
-      - `scripts\install.js`: a JavaScript script used by `npm` when installing the
+      - `scripts/install.js`: a JavaScript script used by `npm` when installing the
         dependencies for building the main JavaScript bundle of the extension library.
       - `package.json`: Holds the meta-data for the Node project.
       - `tsconfig.json`: Holds the options to compile the TypeScript project.<br/>
@@ -94,8 +94,8 @@ Here are the parameters to watch and where they are referenced:
     This directory is located at the top level of this repository.<br/>
     Note that in all this document, we use the default value of "taipy_gui_ext_library"
     although your settings will change that.
-  - In the [`setup.py`](setup.py) file, as the value for the `name` parameter of the
-    invocation of *setup()*.
+  - In the [`pyproject.toml`](pyproject.toml) file, as the value for the `name` key of the
+    *[project]* table.
   - In the `get_scripts()` method of the `ElementLibrary` subclass defined in
     [<package_dir_name>/library.py](taipy_gui_ext_library/library.py).<br/>
     The path to the JavaScript bundle, relative to the root of the repository,
@@ -130,7 +130,7 @@ Here are the parameters to watch and where they are referenced:
 
   This element is declared as using the "Element" React component defined in the
   [TypeScript source file](taipy_gui_ext_library/frontend/src/Element.tsx) and referenced in
-  the [JavaScript bundle entry point](taipy_gui_ext_library/frontend\src\index.ts).<br/>
+  the [JavaScript bundle entry point](taipy_gui_ext_library/frontend/src/index.ts).<br/>
   These will have to be removed as well from your final project.
 
 - JavaScript bundle name
@@ -153,19 +153,23 @@ Here are the parameters to watch and where they are referenced:
 
 - Packaging information
 
-  The [setup file](setup.py) defines a handful of information that is bundled
-  in the Python package to identify it better when it is deployed.<br/>
-  You can look at Python's documentation on
-  [Setup Scripts](https://docs.python.org/3/distutils/setupscript.html) or
-  the [setuptools documentation](https://setuptools.pypa.io/en/latest/)
-  for more information. Here is a quick summary of what you can customize:
+  The [Python project settings file](pyproject.toml) defines a handful of information that
+  is bundled in the Python package to help people find or learn about your project when
+  it is deployed.<br/>
+  You can look at the
+  [setuptools documentation](https://setuptools.pypa.io/en/latest/)
+  for more information.<br/>
+  Here is a quick summary of what you can customize in the *[project]* table:
 
-  - The *author* and *author_email* parameters can be set to identify you or your company;
-  - The *description* and *long_description* provide short and long text that
-    describes your package;
-  - *version* can be used to identify the version of your package;
-  - *keywords* can be used to facilitate finding your package in package repositories
-    that provide a search capability.
+  - The *name* key already mentioned above must be set to the project's name;
+  - The *version* key can be used to identify the version of your package;
+  - The *authors* keys can be set to identify you, your company, or any other
+    individual that is part of authoring this extension library;
+  - The *description* key provides a short text string that describes your package;
+  - The *readme* key can be set to locate a file with all the details for the
+    extension library;
+  - The *keywords* key can be used to facilitate finding your package in package
+    repositories that provide a search capability.
 
 ### Setting up the JavaScript build
 
@@ -213,13 +217,15 @@ Now that the JavaScript bundle of the extension library is built, you can run th
 [test application](demo.py) to verify it works properly.<br/>
 Your current directory must be set to the root directory of the repository.
 
-Assuming your Python environment is properly setup, you can run the following:
+Assuming your Python environment is properly setup (that is, Taipy GUI is installed),
+you can run the following:
 
 ```
 python demo.py
 ```
 
-A Taipy GUI application is launched, and your browser opens on the test page.
+A Taipy GUI application is launched, and your browser opens on the test page that
+displays the custom visual element.
 
 ### Packaging the extension library
 
@@ -229,20 +235,10 @@ it with other users of Taipy GUI, you can turn it into a standalone Python packa
 From the root directory of this repository, run:
 
 ```
-python setup.py build_py
-```
-
-This creates the directory 'build' where the content of your Python package is copied
-and isolated.
-
-To create the final Python package, you must run the following:
-
-```
 pip install build
 python -m build
 ```
 
 This creates a directory called 'dist' where the Taipy GUI extension library
-has been packaged into a file called `taipy-gui-ext-library-1.0.0.tar.gz`.<br/>
+has been packaged into a file called `taipy_gui_ext_library-1.0.0.tar.gz`.<br/>
 You can distribute this file as a regular Python package archive.
-
