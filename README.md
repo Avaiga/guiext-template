@@ -118,7 +118,8 @@ Here are the parameters to watch and where they are referenced:
 
   This is used when Taipy GUI searches for the code involved in implementing
   of a visual element: custom element types use the library name as a prefix
-  for their name (i.e., `<|extension_library_name.element_name|>` in a Markdown page). 
+  for their name (i.e., `<|extension_library_name.element_name|>` in a Markdown page).<br/>
+  This name is also used to create a default name for the JavaScript library.
 
   The value in the template is "library".<br/>
   The source code comments refer to this value as '<extension_library_name>'.
@@ -133,9 +134,9 @@ Here are the parameters to watch and where they are referenced:
   the [JavaScript bundle entry point](taipy_gui_ext_library/frontend/src/index.ts).<br/>
   These will have to be removed as well from your final project.
 
-- JavaScript bundle name
+- JavaScript bundle file name
 
-  The name of the JavaScript bundle that holds the frontend code for
+  The name of the JavaScript bundle file that holds the frontend code for
   this extension library.<br/>
   You don't have to change the base name of this bundle file, but in case
   you want to change this, make sure it is updated in these two locations:
