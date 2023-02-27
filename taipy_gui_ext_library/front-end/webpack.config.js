@@ -23,11 +23,20 @@ module.exports = (env, options) => {
     mode: options.mode, // 'development' | 'production'
     entry: ["./src/index.ts"],
     output: {
+      // filename: the filename of the JavaScript bundle that gets generated.
+      // The 'get_scripts()' method of the ElementLibrary subclass must return
+      // the full path to this file.
       filename: "library.js",
       path: path.resolve(__dirname, "dist"),
       library: {
+        // name: if ElementLibrary.get_js_module_name() is not overloaded (which
+        // is the case in the template), this must be a camel case version of the
+        // extension library name (the string returned by its 'get_name()' method).
+        // In this template, because get_name() returns "library", we
+        // must use the string "Library" with a capital 'L'.
+        // See the ElementLibrary.get_js_module_name() documentation for details.
         name: "Library",
-        type: "umd",
+        type: "umd"
       },
       publicPath: "/",
     },
