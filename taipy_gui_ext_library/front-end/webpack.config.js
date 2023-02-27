@@ -29,10 +29,12 @@ module.exports = (env, options) => {
       filename: "library.js",
       path: path.resolve(__dirname, "dist"),
       library: {
-        // name: must a Camel-case version of the extension library name
-        // (the string returned by its 'get_name()' method).
+        // name: if ElementLibrary.get_js_module_name() is not overloaded (which
+        // is the case in the template), this must be a camel case version of the
+        // extension library name (the string returned by its 'get_name()' method).
         // In this template, because get_name() returns "library", we
         // must use the string "Library" with a capital 'L'.
+        // See the ElementLibrary.get_js_module_name() documentation for details.
         name: "Library",
         type: "umd"
       },

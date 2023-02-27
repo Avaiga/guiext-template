@@ -16,7 +16,7 @@ class Library(ElementLibrary):
         # The name of the JavaScript module file is used in the front-end/webpack.config.js
         # file, as the value of the output.library.name key.
         #
-        # In our situation, the JavaScript library name is a Camel-case version of this
+        # In our situation, the JavaScript library name is a camel case version of this
         # string.
         return "library"
 
