@@ -37,14 +37,14 @@ to create a new repository initialized from this template.
 - `taipy_gui_ext_library/`: The directory where all the Python and TypeScript code for
    the extension library can be found.<br/>
    Note that this repository's name is ultimately the root directory of the Python
-   package that you will build.<br/>
+   package you will build.<br/>
    This directory contains the following:
-   - `frontend/`: The directory where all the frontend code is located.<br/>
+   - `front-end/`: The directory where all the front-end code is located.<br/>
       This directory contains the following:
       - `src/`: Where the source files for components are located.
-         - `index.ts`: the entry point for the frontend bundle.<br/>
-           This file typically just exports all the component classes so they can be used
-           by Taipy GUI.
+         - `index.ts`: the entry point for the front-end bundle.<br/>
+           This file typically just exports all the component classes so Taipy GUI can
+           use them.
          - `Element.tsx`: TypeScript source for the React component associated with
            the custom element called "element", as defined in the method
            `get_elements()` of the `ElementLibrary` subclass.
@@ -53,28 +53,28 @@ to create a new repository initialized from this template.
       - `package.json`: Holds the meta-data for the Node project.
       - `tsconfig.json`: Holds the options to compile the TypeScript project.<br/>
         The two important settings for the project configuration are:
-        - The value of *compilerOptions.outDir*"*: This indicates where the JavaScript
+        - The value of *compilerOptions.outDir*: This indicates where the JavaScript
           bundle is ultimately created.<br/>
           If you wish to change this, you must also update the value of *output.path*
-          in the [webpack configuration file](taipy_gui_ext_library/frontend/webpack.config.js) and
+          in the [webpack configuration file](taipy_gui_ext_library/front-end/webpack.config.js) and
           the script path in the [library Python module file](taipy_gui_ext_library/library.py)
           (see the `get_scripts()` method of the `ElementLibrary` subclass).<br/>
           The value in the template is "./dist/".
         - The value of *compilerOptions.include*: Holds the list of directories that
           are scanned for TypeScript source files. This must include the directory where
-          our sources files are located, which in the template is the "src" directory.<br/>
+          our source files are located.<br/>
           The template value is "["src"]", since that is the only directory where our
           source files are located.
 
 ## Building the extension library
 
-There are several steps to take to build the Python package that holds the extension library
+You must take several steps to build the Python package that holds the extension library
 and the JavaScript code it uses.
 
 ### Customizing the extension library settings
 
 Although the settings will work for the extension library defined in this template,
-you need to modify some files to match your specific settings.
+you will have to modify some files to match your specific settings.
 
 Here are the parameters to watch and where they are referenced:
 
@@ -100,8 +100,8 @@ Here are the parameters to watch and where they are referenced:
     [<package_dir_name>/library.py](taipy_gui_ext_library/library.py).<br/>
     The path to the JavaScript bundle, relative to the root of the repository,
     should be updated.
-  - In the [`demo.py`](demo.py) file, where the library is imported.
-  - In the [`MANIFEST`](MANIFEST.in) file that is used for building the Python package.</br>
+  - In the [`demo.py`](demo.py) file, where the extension library is imported.
+  - In the [`MANIFEST`](MANIFEST.in) file used for building the Python package.</br>
     This file contains an instruction to package the JavaScript bundle, which is located
     using the package directory name.
 
@@ -111,15 +111,17 @@ Here are the parameters to watch and where they are referenced:
 
   The library name is the string that is returned by the method
   [`get_name()`](https://docs.taipy.io/en/latest/manuals/reference/taipy.gui.extension.ElementLibrary/#taipy.gui.extension.library.ElementLibrary.get_name)
-  of the `ElementLibrary` you are building.<br/>
+  of the `ElementLibrary` subclass you are implementing.<br/>
   The name "taipy" is reserved by Taipy GUI.<br/>
   This name usually identifies the extension library author.<br/>
   It is defined in [<package_dir_name>/library.py](taipy_gui_ext_library/library.py).
 
   This is used when Taipy GUI searches for the code involved in implementing
-  of a visual element: custom element types use the library name as a prefix
+  a visual element: custom element types use the library name as a prefix
   for their name (i.e., `<|extension_library_name.element_name|>` in a Markdown page).<br/>
-  This name is also used to create a default name for the JavaScript library.
+  This name is also used to create a default name for the JavaScript module when the method
+  [`get_js_module_name()`](https://docs.taipy.io/en/latest/manuals/reference/taipy.gui.extension.ElementLibrary/#taipy.gui.extension.library.ElementLibrary.get_js_module_name)
+  is not overloaded: a camel case version of the element library name is then used.
 
   The value in the template is "library".<br/>
   The source code comments refer to this value as '<extension_library_name>'.
@@ -130,23 +132,23 @@ Here are the parameters to watch and where they are referenced:
   element called "element" that should ultimately be removed from your extension library.
 
   This element is declared as using the "Element" React component defined in the
-  [TypeScript source file](taipy_gui_ext_library/frontend/src/Element.tsx) and referenced in
-  the [JavaScript bundle entry point](taipy_gui_ext_library/frontend/src/index.ts).<br/>
+  [TypeScript source file](taipy_gui_ext_library/front-end/src/Element.tsx) and referenced in
+  the [JavaScript bundle entry point](taipy_gui_ext_library/front-end/src/index.ts).<br/>
   These will have to be removed as well from your final project.
 
 - JavaScript bundle file name
 
-  The name of the JavaScript bundle file that holds the frontend code for
+  The name of the JavaScript bundle file that holds the front-end code for
   this extension library.<br/>
   You don't have to change the base name of this bundle file, but in case
   you want to change this, make sure it is updated in these two locations:
 
   - In the method `get_scripts()` of the `ElementLibrary` subclass, defined in
     [<package_dir_name>/library.py](taipy_gui_ext_library/library.py).<br/>
-    This method must return an array of strings that must contain the path to the bundle
-    path relative to the repository directory.<br/>
-    The value in the template is "taipy_gui_ext_library/frontend/dist/library.js".
-  - In the [webpack configuration](taipy_gui_ext_library/frontend/webpack.config.js).<br/>
+    This method must return an array of strings containing the path to the bundle
+    file, relative to the repository directory.<br/>
+    The value in the template is "taipy_gui_ext_library/front-end/dist/library.js".
+  - In the [webpack configuration](taipy_gui_ext_library/front-end/webpack.config.js).<br/>
     The filename of the bundle must be set as the *filename* property value
     of the *output* property of the dictionary returned by the function
     assigned to *module.exports*.<br/>
@@ -154,8 +156,8 @@ Here are the parameters to watch and where they are referenced:
 
 - Packaging information
 
-  The [Python project settings file](pyproject.toml) defines a handful of information that
-  is bundled in the Python package to help people find or learn about your project when
+  The [Python project settings file](pyproject.toml) defines a handful of information
+  bundled in the Python package to help people find or learn about your project when
   it is deployed.<br/>
   You can look at the
   [setuptools documentation](https://setuptools.pypa.io/en/latest/)
@@ -169,7 +171,7 @@ Here are the parameters to watch and where they are referenced:
   - The *description* key provides a short text string that describes your package;
   - The *readme* key can be set to locate a file with all the details for the
     extension library;
-  - The *keywords* key can be used to facilitate finding your package in package
+  - The *keywords* key can facilitate finding your package in package
     repositories that provide a search capability.
 
 ### Setting up the JavaScript build
@@ -191,25 +193,25 @@ location `$TAIPY_GUI_DIR/taipy/gui/webapp`.
 
 Once the environment variable "TAIPY_GUI_DIR" is set, here are the steps to setup the build:
 
-- Change your directory to where the frontend code is located:<br/>
-  `cd taipy_gui_ext_library/frontend`
+- Change your directory to where the front-end code is located:<br/>
+  `cd taipy_gui_ext_library/front-end`
 - Install the packages that your library depends on:<br/>
   `npm install`<br/>
   This will run a JavaScript script that installs the Taipy GUI Extension API library.
 
-The 'frontend' directory will have an additional subdirectory called 'node_modules' where
+The 'front-end' directory will have an additional subdirectory called 'node_modules' where
 all dependent libraries are copied.
 
 ### Building the JavaScript bundle
 
-To build the JavaScript bundle that holds the code for the frontend part of the extension
-library, you must still be in the 'frontend' directory and run:
+To build the JavaScript bundle that holds the code for the front-end part of the extension
+library, you must still be in the 'front-end' directory and run:
 `npm run build`
 
 Note that you can use `npm run build:dev` to keep debugging information to
 spot and fix potential problems in your TypeScript code.
 
-An additional directory called 'dist' is created in the 'frontend' directory, where
+An additional directory called 'dist' is created in the 'front-end' directory, where
 your JavaScript bundle was created.
 
 ### Testing the extension library

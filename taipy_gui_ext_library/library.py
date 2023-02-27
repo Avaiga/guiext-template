@@ -1,4 +1,3 @@
-from pathlib import Path
 from taipy.gui.extension import ElementLibrary, Element, ElementProperty, PropertyType
 
 
@@ -14,7 +13,7 @@ class Library(ElementLibrary):
         # then this name is used for building the name of the JavaScript
         # module that holds the front-end code (if 'get_js_module_name()'
         # is not overloaded).
-        # The name of the JavaScript module file is used in the frontend/webpack.config.js
+        # The name of the JavaScript module file is used in the front-end/webpack.config.js
         # file, as the value of the output.library.name key.
         #
         # In our situation, the JavaScript library name is a Camel-case version of this
@@ -40,7 +39,4 @@ class Library(ElementLibrary):
         # This must contains, at least, the path to the extension JavaScript
         # bundle:
         #   <package_dir_name>/<frontend_code_dir>/<build_dir>/<js_bundle_name>.js
-        return ["taipy_gui_ext_library/frontend/dist/library.js"]
-
-    def get_resource(self, name: str) -> Path:
-        return super().get_resource(name)
+        return ["taipy_gui_ext_library/front-end/dist/library.js"]

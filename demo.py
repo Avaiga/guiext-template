@@ -9,11 +9,10 @@ from taipy_gui_ext_library import Library
 page = """
 # Extension library
 
-<|My element content|library.element|>
+Custom element: <|My text content|library.element|>
 """
 gui = Gui(page=page)
 gui.add_library(Library())
-
 if __name__ == "__main__":
     # Run main app
     gui.run()
