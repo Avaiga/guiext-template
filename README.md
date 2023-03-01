@@ -191,13 +191,23 @@ the environment variable "TAIPY_GUI_DIR" to the value indicated at the "Location
 You can verify that this setting is correct by confirming that there is a directory at the
 location `$TAIPY_GUI_DIR/taipy/gui/webapp`.
 
-Once the environment variable "TAIPY_GUI_DIR" is set, here are the steps to setup the build:
+You can store this setting in the file `taipy_gui_ext_library/front-end/.env` if you want
+to run the build process several times and not forget to set the environment variable
+each time.<br/>
+This file must contain a single line:
+```
+TAIPY_GUI_DIR=<taipy_gui_installation_directory>
+```
+
+Once the environment variable "TAIPY_GUI_DIR" is set (as an environment variable or in the
+`.env` file next to `package.json`), here are the steps to setup the build:
 
 - Change your directory to where the front-end code is located:<br/>
   `cd taipy_gui_ext_library/front-end`
 - Install the packages that your library depends on:<br/>
   `npm install`<br/>
-  This will run a JavaScript script that installs the Taipy GUI Extension API library.
+  This will run a JavaScript script that installs the Taipy GUI Extension API library.<br/>
+  This command will fail if the environment variable "TAIPY_GUI_DIR" is not set properly.
 
 The 'front-end' directory will have an additional subdirectory called 'node_modules' where
 all dependent libraries are copied.
