@@ -4,6 +4,8 @@
 // by the ElementLibrary defined in ../../library.py
 //
 // This component displays a string in reverse
+import React from "react";
+
 import { useDynamicProperty } from "taipy-gui";
 
 interface ElementProps {

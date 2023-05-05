@@ -18,7 +18,7 @@ To build Taipy GUI Extension Libraries, you need to have installed:
 
 - Python 3.8 or above
 - Node 18.2 or above (and npm)
-- Taipy GUI 2.0 or above
+- Taipy GUI 2.2 or above
 
 ## How to use this template
 
