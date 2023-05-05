@@ -98,8 +98,8 @@ Here are the parameters to watch and where they are referenced:
     *[project]* table.
   - In the `get_scripts()` method of the `ElementLibrary` subclass defined in
     [<package_dir_name>/library.py](taipy_gui_ext_library/library.py).<br/>
-    The path to the JavaScript bundle, relative to the root of the repository,
-    should be updated.
+    The path to the JavaScript bundle, relative to the directory containing the extension 
+    library class definition, should be updated.
   - In the [`demo.py`](demo.py) file, where the extension library is imported.
   - In the [`MANIFEST`](MANIFEST.in) file used for building the Python package.</br>
     This file contains an instruction to package the JavaScript bundle, which is located
