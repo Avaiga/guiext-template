@@ -146,7 +146,7 @@ Here are the parameters to watch and where they are referenced:
   - In the method `get_scripts()` of the `ElementLibrary` subclass, defined in
     [<package_dir_name>/library.py](taipy_gui_ext_library/library.py).<br/>
     This method must return an array of strings containing the path to the bundle
-    file, relative to the repository directory.<br/>
+    file, relative to the directory containing the extension library class definition.<br/>
     The value in the template is "taipy_gui_ext_library/front-end/dist/library.js".
   - In the [webpack configuration](taipy_gui_ext_library/front-end/webpack.config.js).<br/>
     The filename of the bundle must be set as the *filename* property value
@@ -178,10 +178,12 @@ Here are the parameters to watch and where they are referenced:
 
 Before the bundle can be built, you must install the Node modules that are needed
 and resolve JavaScript bundle dependencies. One of those dependencies is the Taipy
-GUI JavaScript bundle that provides the Taipy GUI Extension API.
+GUI JavaScript bundle that provides the Taipy GUI Extension API.<br/>
+The detection of the path to the taipy-gui package should be done automatically by 
+installing the packages with: `npm install` in the `taipy_gui_ext_library/front-end` directory.
 
-To set up to build, you must set the environment variable "TAIPY_GUI_DIR" to the
-full path of the directory where Taipy GUI is installed.<br/>
+If you don't want to use the automatic setup, you must set the environment variable 
+"TAIPY_GUI_DIR" to the full path of the directory where Taipy GUI is installed.<br/>
 To get this information, you can type:
 ```
 pip show taipy-gui
@@ -210,7 +212,7 @@ Once the environment variable "TAIPY_GUI_DIR" is set (as an environment variable
   This command will fail if the environment variable "TAIPY_GUI_DIR" is not set properly.
 
 The 'front-end' directory will have an additional subdirectory called 'node_modules' where
-all dependent libraries are installed.
+all dependent libraries are installed.<br>
 
 ### Building the JavaScript bundle
 
