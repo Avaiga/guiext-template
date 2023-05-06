@@ -38,5 +38,6 @@ class Library(ElementLibrary):
     def get_scripts(self) -> list[str]:
         # This must contains, at least, the path to the extension JavaScript
         # bundle:
-        #   <package_dir_name>/<frontend_code_dir>/<build_dir>/<js_bundle_name>.js
-        return ["taipy_gui_ext_library/front-end/dist/library.js"]
+        #   <frontend_code_dir>/<build_dir>/<js_bundle_name>.js
+        return ["front-end/dist/library.js"]
+    
