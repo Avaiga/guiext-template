@@ -211,8 +211,7 @@ Once the environment variable "TAIPY_GUI_DIR" is set (as an environment variable
   This will run a NodeJS script that installs the Taipy GUI Extension API library.<br/>
   This command will fail if the environment variable "TAIPY_GUI_DIR" is not set properly.
 
-The 'front-end' directory will have an additional subdirectory called 'node_modules' where
-all dependent libraries are installed.<br>
+The 'front-end' directory will have an additional subdirectory called 'node_modules' where all dependent libraries are installed.
 
 ### Building the JavaScript bundle
 
