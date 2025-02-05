@@ -16,9 +16,9 @@ This code is meant to be modified so you can add your custom visual elements.
 
 To build Taipy GUI Extension Libraries, you need to have installed:
 
-- Python 3.8 or above
+- Python 3.9 or above
 - Node 18.2 or above (and npm)
-- Taipy GUI 2.2 or above
+- Taipy GUI 4.0 or above
 
 ## How to use this template
 
@@ -240,6 +240,37 @@ python demo.py
 
 A Taipy GUI application is launched, and your browser opens on the test page that
 displays the custom visual element.
+
+### Accessing the library's elements from the Page Builder API
+
+At runtime, and *after* the library is registered (that is, after `Gui.add_library()` is invoked),
+functions are dynamically added to the library's module to access its elements, exposing them with
+the Page Builder API.
+
+A typical code will look like:
+```python
+import <package_dir_name>
+
+...
+
+with tgb.Page() as page:
+  ...
+  <package_dir_name>.<element_name>(<properties>)
+  ...
+```
+
+To provide developers with autocompletion and type checking when coding, you can generate a Python
+Interface Definition file next to your module's `__init__.py` file that will define function stubs
+for every element of the extension library, with their properties, including their potential
+documentation.
+
+To create the Python Interface Definition file (called `__init__.pyi`, located next to the 
+`__init__.py` file), go to the project directory (above the '<package_dir_name>' directory) and
+run:
+```sh
+python -m taipy.gui.extension generate_tgb <package_dir_name>
+```
+This file will provide support for developers in their IDEs.
 
 ### Packaging the extension library
 
