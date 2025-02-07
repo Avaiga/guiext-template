@@ -3,33 +3,65 @@ const { exec, execSync } = require("child_process");
 const { existsSync, writeFileSync, appendFileSync } = require("fs");
 const { sep } = require("path");
 
-const getGuiEnv = () =>
-    execSync(
-        process.platform === "win32"
-            ? 'pipenv run pip show taipy-gui | findStr "Location:"'
-            : "pipenv run pip show taipy-gui | grep Location:"
-    )
-        .toString()
-        .trim()
-        .substring(9)
-        .trim();
-
-let TAIPY_GUI_DIR = process.env.TAIPY_GUI_DIR;
-if (!TAIPY_GUI_DIR) {
-    TAIPY_GUI_DIR = getGuiEnv();
-    if (existsSync(".env")) {
-        appendFileSync(".env", `\nTAIPY_GUI_DIR=${TAIPY_GUI_DIR}`);
-    } else {
-        writeFileSync(".env", `TAIPY_GUI_DIR=${TAIPY_GUI_DIR}`);
+const fetchTaipyDir = () => {
+    let pipenvPrefix = ""
+    if (!process.env.VIRTUAL_ENV) {
+	try {
+	    execSync("pipenv --version");
+	    pipenvPrefix = "pipenv run ";
+	}
+	catch {}
     }
-}
+    const locatePackage = (package) => {
+	let desc = null;
+	try {
+	    desc = execSync(`${pipenvPrefix}pip show ${package}`, {stdio: [null,null,"ignore"]})
+	} catch {};
+	let location = null;
+	let editableLocation = null;
+	if (desc) {
+	    desc.toString().split("\n").forEach(line => {
+		if (line.startsWith("Location: ")) {
+		    location = line.substring(10).trim();
+		} else if (line.startsWith("Editable project location: ")) {
+		    editableLocation = line.substring(27).trim();
+		}
+	    });
+	}
+	return editableLocation || location;
+    }
+    return locatePackage("taipy-gui") || locatePackage("taipy");
+};
 
-const taipy_webapp_dir = `${TAIPY_GUI_DIR}${sep}taipy${sep}gui${sep}webapp`;
-if (!existsSync(taipy_webapp_dir)) {
+let taipyDir = process.env.TAIPY_DIR;
+let taipyDirFetched = false;
+if (!taipyDir) {
+    taipyDir = fetchTaipyDir();
+    taipyDirFetched = !!taipyDir;
+}
+if (!existsSync(taipyDir)) {
+    message = taipyDir ? `Cannot find Taipy in '${taipyDir}'` : 'Cannot find the Taipy GUI installation directory';
     console.error(
-        `Cannot find the Taipy GUI (${taipy_webapp_dir}) webapp directory.\nMake sure TAIPY_GUI_DIR is set properly as (${getGuiEnv()}).`
+        `${message}.\nMake sure TAIPY_DIR is set to the root directory of your Taipy installation.`
     );
     process.exit(1);
+}
+const taipyWebappDir = `${taipyDir}${sep}taipy${sep}gui${sep}webapp`;
+if (!existsSync(taipyWebappDir)) {
+    console.error(
+        `Cannot find the Taipy GUI (${taipyWebappDir}) webapp directory.\nMake sure TAIPY_DIR is set to the root directory of your Taipy installation.`
+    );
+}
+else {
+    console.error(`Taipy GUI webapp was located in ${taipyWebappDir}.`);
+}
+// Save TAIPY_DIR for future runs
+if (taipyDirFetched) {
+    if (existsSync(".env")) {
+        appendFileSync(".env", `\nTAIPY_DIR=${taipyDir}`);
+    } else {
+        writeFileSync(".env", `TAIPY_DIR=${taipyDir}`);
+    }
 }
 
 const spinner = "|/-\\";
@@ -37,7 +69,7 @@ let i = 0;
 
 let spinnerTimer;
 
-exec(`npm i ${taipy_webapp_dir}`)
+exec(`npm i ${taipyWebappDir}`)
     .on("spawn", () => {
         spinnerTimer = setInterval(() => {
             process.stdout.write("Installing the Taipy GUI library... \r" + spinner[i++]);
