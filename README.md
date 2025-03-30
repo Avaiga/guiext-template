@@ -5,7 +5,7 @@ extension library that contains visual elements with dynamic properties therefor
 with React.
 
 You can find the Taipy GUI Extension Libraries documentation in
-[this section](https://docs.taipy.io/en/latest/manuals/gui/extension/)
+[this section](https://docs.taipy.io/en/latest/userman/gui/extension/)
 of the Taipy GUI User Manual.
 
 This template contains all the code that lets you build a Taipy GUI Extension Library
@@ -29,7 +29,7 @@ to create a new repository initialized from this template.
 
 - `README.md`: this file.
 - `demo.py`: Python script demonstrating the usage of the elements provided in the
-   [`ElementLibrary`](https://docs.taipy.io/en/latest/manuals/reference/taipy.gui.extension.ElementLibrary/).
+   [`ElementLibrary`](https://docs.taipy.io/en/latest/manuals/refmans/reference/pkg_taipy/pkg_gui/pkg_extension/ElementLibrary/).
 - `pyproject.toml`: Python project settings file for the extension library package.
 - `MANIFEST.in`: This file lists the commands to be executed when the Python package
   is built as a source distribution. See [this section](#packaging-the-extension-library)
@@ -110,7 +110,7 @@ Here are the parameters to watch and where they are referenced:
 - Extension library name
 
   The library name is the string that is returned by the method
-  [`get_name()`](https://docs.taipy.io/en/latest/manuals/reference/taipy.gui.extension.ElementLibrary/#taipy.gui.extension.library.ElementLibrary.get_name)
+  [`get_name()`](https://docs.taipy.io/en/latest/refmans/reference/pkg_taipy/pkg_gui/pkg_extension/ElementLibrary/#taipy.gui.extension.ElementLibrary.get_name)
   of the `ElementLibrary` subclass you are implementing.<br/>
   The name "taipy" is reserved by Taipy GUI.<br/>
   This name usually identifies the extension library author.<br/>
@@ -120,7 +120,7 @@ Here are the parameters to watch and where they are referenced:
   a visual element: custom element types use the library name as a prefix
   for their name (i.e., `<|extension_library_name.element_name|>` in a Markdown page).<br/>
   This name is also used to create a default name for the JavaScript module when the method
-  [`get_js_module_name()`](https://docs.taipy.io/en/latest/manuals/reference/taipy.gui.extension.ElementLibrary/#taipy.gui.extension.library.ElementLibrary.get_js_module_name)
+  [`get_js_module_name()`](https://docs.taipy.io/en/latest/refmans/reference/pkg_taipy/pkg_gui/pkg_extension/ElementLibrary/#taipy.gui.extension.ElementLibrary.get_js_module_name)
   is not overloaded: a camel case version of the element library name is then used.
 
   The value in the template is "library".<br/>
