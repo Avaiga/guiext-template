@@ -62,7 +62,7 @@ module.exports = (_env, options) => {
       new webpack.DllReferencePlugin({
         manifest: path.resolve(
           __dirname,
-          `${process.env.TAIPY_GUI_DIR}/taipy/gui/webapp/taipy-gui-deps-manifest.json`
+          `${process.env.TAIPY_DIR}/taipy/gui/webapp/taipy-gui-deps-manifest.json`
         ),
         name: "TaipyGuiDependencies"
       }),

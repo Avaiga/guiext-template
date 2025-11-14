@@ -1,31 +1,79 @@
-# guiext-template
+# Taipy GUI Extension Template (`guiext-template`)
 
-A simple GitHub template that lets you create a [Taipy GUI](https://github.com/Avaiga/taipy-gui)
-extension library that contains visual elements with dynamic properties therefore coded
-with React.
+A GitHub template to create a [Taipy GUI](https://github.com/Avaiga/taipy-gui) extension library, using React for dynamic visual components.
 
-You can find the Taipy GUI Extension Libraries documentation in
-[this section](https://docs.taipy.io/en/latest/manuals/gui/extension/)
-of the Taipy GUI User Manual.
+See the [official documentation](https://docs.taipy.io/en/latest/manuals/gui/extension/) for more information on Taipy GUI extension libraries.
 
-This template contains all the code that lets you build a Taipy GUI Extension Library
-containing a single element and use this library in a tiny Taipy GUI application.<br/>
-This code is meant to be modified so you can add your custom visual elements.
+---
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [How to Use This Template](#how-to-use-this-template)
+- [Repository Structure](#repository-structure)
+- [Building the Extension Library](#building-the-extension-library)
+  - [Customizing the Extension Settings](#customizing-the-extension-library-settings)
+  - [Setting Up the JavaScript Build](#setting-up-the-javascript-build)
+  - [Building the JavaScript Bundle](#building-the-javascript-bundle)
+  - [Testing the Extension Library](#testing-the-extension-library)
+  - [Using the Extension in Page Builder API](#using-the-extension-in-page-builder-api)
+  - [Packaging the Extension Library](#packaging-the-extension-library)
+
+---
 
 ## Prerequisites
 
-To build Taipy GUI Extension Libraries, you need to have installed:
+- Python 3.9+
+- Node.js 18.2+ (with npm)
+- Taipy GUI 4.0+
 
-- Python 3.9 or above
-- Node 18.2 or above (and npm)
-- Taipy GUI 4.0 or above
+---
+
+## Quick Start
+
+```sh
+# Clone the template
+git clone https://github.com/Avaiga/guiext-template your-extension
+cd your-extension
+
+# Install front-end dependencies
+cd taipy_gui_ext_library/front-end
+npm install
+
+# Build the JavaScript bundle
+npm run build
+
+# Run the demo
+cd ../../
+python demo.py
+```
+
+---
 
 ## How to use this template
 
 Click [![this link](https://img.shields.io/badge/-this%20link-orange)](https://github.com/Avaiga/guiext-template/generate)
-to create a new repository initialized from this template.
+to create a new repository from this template.
 
 ## Repository structure
+
+```
+.
++-- demo.py                        # Example application using the extension
++-- pyproject.toml                 # Python packaging settings
++-- MANIFEST.in                    # Files included in the distribution
++-- taipy_gui_ext_library/         # Python and TypeScript implementation
+|   +-- front-end/
+|       +-- src/
+|       |   +-- index.ts           # JS bundle entry point
+|       |   +-- Element.tsx        # Sample React component
+|       +-- scripts/install.js
+|       +-- package.json
+|       +-- tsconfig.json
+|       +-- webpack.config.js
++-- README.md
+```
 
 - `README.md`: this file.
 - `demo.py`: Python script demonstrating the usage of the elements provided in the
@@ -183,25 +231,25 @@ The detection of the path to the taipy-gui package should be done automatically 
 installing the packages with: `npm install` in the `taipy_gui_ext_library/front-end` directory.
 
 If you don't want to use the automatic setup, you must set the environment variable 
-"TAIPY_GUI_DIR" to the full path of the directory where Taipy GUI is installed.<br/>
+"TAIPY_DIR" to the full path of the directory where Taipy GUI is installed.<br/>
 To get this information, you can type:
 ```
 pip show taipy-gui
 ```
 This will print the information relevant to the installed Taipy GUI package. You must set
-the environment variable "TAIPY_GUI_DIR" to the value indicated at the "Location:" line.<br/>
+the environment variable "TAIPY_DIR" to the value indicated at the "Location:" line.<br/>
 You can verify that this setting is correct by confirming that there is a directory at the
-location `$TAIPY_GUI_DIR/taipy/gui/webapp`.
+location `$TAIPY_DIR/taipy/gui/webapp`.
 
 You can store this setting in the file `taipy_gui_ext_library/front-end/.env` if you want
 to run the build process several times and not forget to set the environment variable
 each time.<br/>
 This file must contain this line:
 ```
-TAIPY_GUI_DIR=<taipy_gui_installation_directory>
+TAIPY_DIR=<taipy_installation_directory>
 ```
 
-Once the environment variable "TAIPY_GUI_DIR" is set (as an environment variable or in the
+Once the environment variable "TAIPY_DIR" is set (as an environment variable or in the
 `.env` file next to `package.json`), here are the steps to setup the build:
 
 - Change your directory to where the front-end code is located:<br/>
@@ -209,7 +257,7 @@ Once the environment variable "TAIPY_GUI_DIR" is set (as an environment variable
 - Install the packages that your library depends on:<br/>
   `npm install`<br/>
   This will run a NodeJS script that installs the Taipy GUI Extension API library.<br/>
-  This command will fail if the environment variable "TAIPY_GUI_DIR" is not set properly.
+  This command will fail if the environment variable "TAIPY_DIR" is not set properly.
 
 The 'front-end' directory will have an additional subdirectory called 'node_modules' where all dependent libraries are installed.
 
@@ -268,7 +316,7 @@ To create the Python Interface Definition file (called `__init__.pyi`, located n
 `__init__.py` file), go to the project directory (above the '<package_dir_name>' directory) and
 run:
 ```sh
-python -m taipy.gui.extension generate_tgb <package_dir_name>
+python -m taipy.gui.extension generate_tgb [<package_dir_name>]
 ```
 This file will provide support for developers in their IDEs.
 
